@@ -6,7 +6,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                echo 'Checking out source code from GitHub...'
+                echo 'Checking out source code...'
                 checkout scm
             }
         }
@@ -20,7 +20,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                echo 'Running application tests...'
+                echo 'Running tests...'
                 sh 'mvn test'
             }
         }
@@ -37,8 +37,6 @@ pipeline {
 
         stage('Docker Push') {
             steps {
-                echo 'Pushing Docker image to Docker Hub...'
-
                 withCredentials([usernamePassword(
                     credentialsId: 'dockerhub-creds',
                     usernameVariable: 'DOCKERHUB_USER',
@@ -47,28 +45,36 @@ pipeline {
                     sh '''
                         set +x
                         echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USER" --password-stdin
-
                         docker push puja81/cicd-demo:${BUILD_NUMBER}
                         docker push puja81/cicd-demo:latest
-
                         docker logout
                     '''
                 }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application on EC2...'
+                sh '''
+                    docker pull puja81/cicd-demo:latest
+                    docker stop cicd-demo || true
+                    docker rm cicd-demo || true
+                    docker run -d --name cicd-demo --restart unless-stopped -p 80:8080 puja81/cicd-demo:latest
+                '''
             }
         }
     }
 
     post {
         success {
-            echo 'SUCCESS: Build, Test and Docker Push completed!'
+            echo 'SUCCESS: Application deployed successfully!'
         }
-
         failure {
             echo 'FAILURE: Pipeline failed. Check Console Output.'
         }
-
         always {
-            echo 'Jenkins pipeline execution completed.'
+            echo 'Pipeline execution completed.'
         }
     }
 }
