@@ -13,15 +13,14 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building Spring Boot application...'
-                sh 'chmod +x mvnw'
-                sh './mvnw clean package -DskipTests'
+                sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
                 echo 'Running application tests...'
-                sh './mvnw test'
+                sh 'mvn test'
             }
         }
     }
