@@ -7,23 +7,29 @@ This project demonstrates an automated CI/CD pipeline using Jenkins, Docker, Git
 Automated-CI-CD-Pipeline/
 │
 ├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com/devops/cicd/
-│       │       └── CidcDemoApplication.java
-│       │
-│       └── resources/
-│           ├── application.properties
-│           └── static/
-│               └── index.html
+│   ├── main/
+│   │   ├── java/
+│   │   │   └── com/devops/cicd/
+│   │   │       └── CicdDemoApplication.java
+│   │   │
+│   │   └── resources/
+│   │       ├── application.properties
+│   │       └── static/
+│   │           └── index.html
+│   │
+│   └── test/
+│       └── java/
+│           └── com/devops/cicd/
 │
+├── .gitattributes
 ├── .gitignore
 ├── Dockerfile
+├── HELP.md
 ├── Jenkinsfile
+├── README.md
 ├── mvnw
 ├── mvnw.cmd
 └── pom.xml
-
 ## 1. Launch AWS EC2 Instance
 
 - AMI: Ubuntu Server 24.04 LTS
