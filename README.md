@@ -3,6 +3,27 @@
 ## Project Overview
 This project demonstrates an automated CI/CD pipeline using Jenkins, Docker, GitHub, Maven and AWS EC2 to build, test, containerize and deploy a sample Spring Boot application.
 
+## project structure 
+Automated-CI-CD-Pipeline/
+│
+├── src/
+│   └── main/
+│       ├── java/
+│       │   └── com/devops/cicd/
+│       │       └── CidcDemoApplication.java
+│       │
+│       └── resources/
+│           ├── application.properties
+│           └── static/
+│               └── index.html
+│
+├── .gitignore
+├── Dockerfile
+├── Jenkinsfile
+├── mvnw
+├── mvnw.cmd
+└── pom.xml
+
 ## 1. Launch AWS EC2 Instance
 
 - AMI: Ubuntu Server 24.04 LTS
